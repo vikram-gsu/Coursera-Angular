@@ -1,18 +1,14 @@
 <!DOCTYPE html>
-<html ng-app="NameCalculator">
+<html ng-app="DIApp">
 <head>
 	<title>Angular starts...</title>
 	<script type="text/javascript" src="angular.min.js"></script>
 	<script type="text/javascript" src="app.js"></script>
 </head>
 <body>
-	<div ng-controller="NameCalculatorController">
-		<input type="text" ng-model="name"
-		ng-keyup ="displayCount()">
-		<div>
-			<span>The total of the name characters is: {{nameCount}}</span>
-			
-		</div>
+	<div ng-controller="DIController">
+		<input type="text" ng-model="name" ng-blur="toUpCase()">
+		
 	</div>
 </body>
 </html>

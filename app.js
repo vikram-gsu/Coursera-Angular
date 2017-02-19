@@ -1,17 +1,15 @@
 (function(){
 	'use strict'
-	angular.module('NameCalculator', [])
+	angular.module('DIApp', [])
 
-	.controller('NameCalculatorController', function($scope){
+	.controller('DIController', DIController)
+
+	DIController.$inject = ['$scope', '$filter']
+	function DIController($scope, $filter){
 		
-		$scope.name = ''
+		$scope.name = 'Vikram'
+		var upCase = $filter('uppercase')
 
-		$scope.displayCount = () => {
-				var localNameCount = 0
-				for (var i = $scope.name.length - 1; i >= 0; i--) {
-					localNameCount += $scope.name.charCodeAt(i)
-				}
-				$scope.nameCount = localNameCount
-			}
-	})
+		$scope.toUpCase = () => $scope.name = upCase($scope.name)
+	}
 })()
