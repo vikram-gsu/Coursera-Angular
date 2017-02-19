@@ -1,33 +1,30 @@
 (function(){
 	'use strict'
-	angular.module('CustFilterApp', [])
+	angular.module('DigestApp', [])
 
-	.controller('CustFilterController', CustFilterController)
-	.filter('loves', LovesFilter)
-	.filter('findReplace', FindReplaceFilter)
+	.controller('DigestController', DigestController)
+	
+	DigestController.$inject = ['$scope', '$timeout']
+	function DigestController($scope, $timeout){
+		$scope.counter = 0
+		$scope.increment = () => {
+			$timeout(function(){
+				$scope.counter += 1
+				console.log("Increment executed!")
+			}, 2000)
 
-	CustFilterController.$inject = ['$scope', 'lovesFilter']
-	function CustFilterController($scope, lovesFilter){
-		$scope.message = 'likes is likes'
-		$scope.otherMessage = lovesFilter($scope.message)
+			// setTimeout(function(){
+			// 	$scope.counter += 1
+			// 	console.log("Increment executed!")
+			// 	$scope.$digest()
+			// }, 2000)
 
-	}
-	function escapeRegExp(str) {
-  	return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
-	}
-	function LovesFilter(){
-		return (input) => {
-			input = input || ''
-
-			input = input.replace(new RegExp('likes', 'g'), 'loves')
-			return input
-		}
-	}
-	function FindReplaceFilter(){
-		return (input, findString, replaceString) => {
-			input = input || ''
-			input = input.replace(new RegExp(findString, 'g'), replaceString)
-			return input
+			// setTimeout(function(){
+			// 	$scope.$apply(function(){
+			// 		$scope.counter += 1
+			// 		console.log('Increment executed!')
+			// 	})
+			// }, 2000)
 		}
 	}
 })()

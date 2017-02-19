@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="CustFilterApp">
+<html ng-app="DigestApp">
 <head>
 	<title>Angular starts...</title>
 	<script type="text/javascript" src="angular.min.js"></script>
@@ -8,12 +8,9 @@
 </head>
 <body>
 	<div>Custom Filter</div>
-	<div ng-controller="CustFilterController">
-		
-		<div>{{message}}</div>
-		<div>{{otherMessage}}</div>
-		<div>{{otherMessage|findReplace: "loves":"voila"}}</div>
-		
+	<div ng-controller="DigestController">
+	<input type="button" value="Increment" ng-click="increment()">
+	{{counter}}
 	</div>
 </body>
 </html>
