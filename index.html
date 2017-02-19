@@ -1,13 +1,18 @@
 <!DOCTYPE html>
-<html ng-app="DIApp">
+<html ng-app="FoodApp">
 <head>
 	<title>Angular starts...</title>
 	<script type="text/javascript" src="angular.min.js"></script>
 	<script type="text/javascript" src="app.js"></script>
+	<style type="text/css">div{font-size: 1.8em}</style>
 </head>
 <body>
-	<div ng-controller="DIController">
-		<input type="text" ng-model="name" ng-blur="toUpCase()">
+	<div>Assignment 1</div>
+	<div ng-controller="FoodController">
+		<span>Enter your items:</span>
+		<input type="text" ng-model="food">
+		<input type="button" ng-click="checkiftoomuch()" value="CheckIfToomuch!">
+		<div>{{response}}</div>
 		
 	</div>
 </body>
