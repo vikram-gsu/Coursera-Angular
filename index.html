@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="DigestApp">
+<html ng-app="OneTimeBindingApp">
 <head>
 	<title>Angular starts...</title>
 	<script type="text/javascript" src="angular.min.js"></script>
@@ -7,10 +7,16 @@
 	<style type="text/css">div{font-size: 1.8em}</style>
 </head>
 <body>
-	<div>Custom Filter</div>
-	<div ng-controller="DigestController">
-	<input type="button" value="Increment" ng-click="increment()">
-	{{counter}}
+	<div>One Time Binding</div>
+	<div ng-controller="OneTimeBindingController">
+	<input type="button" value="LogWatchersCount" ng-click="ShowNumberOfWatchers()"> <br>
+	<input type="button" value="SetFullName" ng-click="setFullName()"> <br>
+	Full Name: {{ :: fullName}}
+	
+	<br>
+	<input type="text" ng-model="firstName">
+	{{firstName}}
+
 	</div>
 </body>
 </html>

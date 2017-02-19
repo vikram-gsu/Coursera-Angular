@@ -1,30 +1,17 @@
 (function(){
 	'use strict'
-	angular.module('DigestApp', [])
+	angular.module('OneTimeBindingApp', [])
 
-	.controller('DigestController', DigestController)
+	.controller('OneTimeBindingController', OneTimeBindingController)
 	
-	DigestController.$inject = ['$scope', '$timeout']
-	function DigestController($scope, $timeout){
-		$scope.counter = 0
-		$scope.increment = () => {
-			$timeout(function(){
-				$scope.counter += 1
-				console.log("Increment executed!")
-			}, 2000)
-
-			// setTimeout(function(){
-			// 	$scope.counter += 1
-			// 	console.log("Increment executed!")
-			// 	$scope.$digest()
-			// }, 2000)
-
-			// setTimeout(function(){
-			// 	$scope.$apply(function(){
-			// 		$scope.counter += 1
-			// 		console.log('Increment executed!')
-			// 	})
-			// }, 2000)
+	OneTimeBindingController.$inject = ['$scope']
+	function OneTimeBindingController($scope){
+		$scope.ShowNumberOfWatchers = () => {
+			console.log('Number of watchers:',$scope.$$watchersCount)
 		}
+		$scope.setFullName = () => {
+			$scope.fullName = $scope.firstName + ' ' + 'Reddy'
+		}	
 	}
+	
 })()
