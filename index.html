@@ -1,22 +1,20 @@
 <!DOCTYPE html>
-<html ng-app="OneTimeBindingApp">
+<html ng-app="ngrepeatApp">
 <head>
 	<title>Angular starts...</title>
 	<script type="text/javascript" src="angular.min.js"></script>
 	<script type="text/javascript" src="app.js"></script>
 	<style type="text/css">div{font-size: 1.8em}</style>
 </head>
-<body>
-	<div>One Time Binding</div>
-	<div ng-controller="OneTimeBindingController">
-	<input type="button" value="LogWatchersCount" ng-click="ShowNumberOfWatchers()"> <br>
-	<input type="button" value="SetFullName" ng-click="setFullName()"> <br>
-	Full Name: {{ :: fullName}}
-	
-	<br>
-	<input type="text" ng-model="firstName">
-	{{firstName}}
+<body ng-controller = "ngrepeatController">
+	<div>Ng-repeat</div>
+	<input type="text" ng-model="shoppingCart[2].quantity">
+	<ul ng-repeat = "item in shoppingCart">
+		<li>{{$index + 1}}. {{item.quantity}} of {{item.name}}(s) </li>
+	</ul>
 
-	</div>
+	<input type="text" ng-model="newItemQuantity" placeholder="Item Quantity">
+	<input type="text" ng-model="newItemName" placeholder="Item Name">
+	<button ng-click="addItem()">Add Items</button>
 </body>
 </html>

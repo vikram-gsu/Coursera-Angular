@@ -1,17 +1,27 @@
 (function(){
 	'use strict'
-	angular.module('OneTimeBindingApp', [])
+	angular.module('ngrepeatApp', [])
 
-	.controller('OneTimeBindingController', OneTimeBindingController)
+	.controller('ngrepeatController', ngrepeatController)
 	
-	OneTimeBindingController.$inject = ['$scope']
-	function OneTimeBindingController($scope){
-		$scope.ShowNumberOfWatchers = () => {
-			console.log('Number of watchers:',$scope.$$watchersCount)
+	ngrepeatController.$inject = ['$scope']
+	function ngrepeatController($scope){
+		$scope.shoppingCart = [
+			{name: 'milk',
+			quantity: 2},
+			{name: 'chocolate',
+			quantity: 10},
+			{name: 'condom',
+			quantity: 20},
+			{name: 'guitar',
+			quantity: 1},
+			{name: 'camera',
+			quantity: 10},
+
+		]
+		$scope.addItem = ()=> {
+			$scope.shoppingCart.push({name: $scope.newItemName, quantity: $scope.newItemQuantity})
 		}
-		$scope.setFullName = () => {
-			$scope.fullName = $scope.firstName + ' ' + 'Reddy'
-		}	
 	}
 	
 })()
