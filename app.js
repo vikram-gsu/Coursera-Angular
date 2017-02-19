@@ -1,26 +1,33 @@
 (function(){
 	'use strict'
-	angular.module('FoodApp', [])
+	angular.module('CustFilterApp', [])
 
-	.controller('FoodController', FoodController)
+	.controller('CustFilterController', CustFilterController)
+	.filter('loves', LovesFilter)
+	.filter('findReplace', FindReplaceFilter)
 
-	FoodController.$inject = ['$scope']
-	function FoodController($scope){
-		
-		$scope.food = ''
-		$scope.checkiftoomuch = () => {
-			var foodItems = $scope.food.split(',')
-			
-			var numberOfItems = foodItems.filter(item => item.trim().length>0)
-																	.length
-			
-			if ($scope.food == ''){
-				$scope.response = "Please enter food first!"
-			}else if(numberOfItems >0 && numberOfItems <= 3){
-				$scope.response = 'Enjoy!'
-			}else{
-				$scope.response = 'Too much!'
-			}
+	CustFilterController.$inject = ['$scope', 'lovesFilter']
+	function CustFilterController($scope, lovesFilter){
+		$scope.message = 'likes is likes'
+		$scope.otherMessage = lovesFilter($scope.message)
+
+	}
+	function escapeRegExp(str) {
+  	return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
+	}
+	function LovesFilter(){
+		return (input) => {
+			input = input || ''
+
+			input = input.replace(new RegExp('likes', 'g'), 'loves')
+			return input
+		}
+	}
+	function FindReplaceFilter(){
+		return (input, findString, replaceString) => {
+			input = input || ''
+			input = input.replace(new RegExp(findString, 'g'), replaceString)
+			return input
 		}
 	}
 })()
