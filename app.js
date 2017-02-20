@@ -1,21 +1,48 @@
 (function(){
 	'use strict'
-	angular.module('controllerAsApp', [])
+	angular.module('customServiceApp', [])
 
-	.controller('controllerAsController', controllerAsController)
-	.controller('childController', childController)
-	function controllerAsController(){
-		var parent = this
-		parent.value = 2
-		parent.obj = {objValue: 're'}
+	.controller('customServiceController', customServiceController)
+	.controller('showItemsListController', showItemsListController)
+	.service('shoppingCartItemsService', shoppingCartItems)
+
+	customServiceController.$inject = ['shoppingCartItemsService']
+	function customServiceController(shoppingCartItemsService){
+		var addItems = this
+		addItems.addItem = () => {
+			shoppingCartItemsService.addItems(addItems.itemQuantity, addItems.itemName)
+		}
+
 	}
 
-	childController.$inject = ['$scope']
-	function childController($scope){
-		var child = this
-		child.value = 3
-		// child.obj = {objValue:'re3'}
-		console.log($scope)
+	customServiceController.$inject = ['shoppingCartItemsService']
+	function showItemsListController(shoppingCartItemsService){
+		var showItems = this
+
+		showItems.items = shoppingCartItemsService.getItems()
+		showItems.removeItem = (index) => {
+			shoppingCartItemsService.removeItem(index)
+		}
 	}
+
+	function shoppingCartItems(){
+		var service = this
+
+		var items = []
+
+		service.addItems = (quantity, name) => {
+			items.push({quantity: quantity, name: name})
+		}
+
+		service.getItems = () => {
+			return items
+		}
+
+		service.removeItem = (index) => {
+			items.splice(index,1)
+		}
+	}
+
+
 	
 })()
