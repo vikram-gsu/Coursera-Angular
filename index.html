@@ -13,11 +13,11 @@
 	<input type="text" ng-model="addItems.itemName" placeholder="Enter name">
 	<button ng-click="addItems.addItem()">Add Item</button>
 	
-</div>
-<div ng-controller="showItemsListController as showItems">
-	<ul ng-repeat="item in showItems.items">
+
+
+	<ul ng-repeat="item in addItems.items">
 		<li>{{item.quantity}} of {{item.name}}
-				<button ng-click="showItems.removeItem($index)">X</button>
+				<button ng-click="addItems.removeItem($index)">X</button>
 		</li>
 	</ul>
 </div>

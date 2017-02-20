@@ -3,35 +3,34 @@
 	angular.module('customServiceApp', [])
 
 	.controller('customServiceController', customServiceController)
-	.controller('showItemsListController', showItemsListController)
-	.service('shoppingCartItemsService', shoppingCartItems)
+	.factory('shoppingCartItemsService', shoppingCartFactory)
 
 	customServiceController.$inject = ['shoppingCartItemsService']
 	function customServiceController(shoppingCartItemsService){
 		var addItems = this
+		var shoppingList = shoppingCartItemsService(1)
 		addItems.addItem = () => {
-			shoppingCartItemsService.addItems(addItems.itemQuantity, addItems.itemName)
+			shoppingList.addItems(addItems.itemQuantity, addItems.itemName)
 		}
 
-	}
-
-	customServiceController.$inject = ['shoppingCartItemsService']
-	function showItemsListController(shoppingCartItemsService){
-		var showItems = this
-
-		showItems.items = shoppingCartItemsService.getItems()
-		showItems.removeItem = (index) => {
-			shoppingCartItemsService.removeItem(index)
+	
+		addItems.items = shoppingList.getItems()
+		addItems.removeItem = (index) => {
+			shoppingList.removeItem(index)
 		}
 	}
 
-	function shoppingCartItems(){
+	function shoppingCartItems(maxItems){
 		var service = this
 
 		var items = []
 
+		
 		service.addItems = (quantity, name) => {
-			items.push({quantity: quantity, name: name})
+			if((maxItems === undefined) || ((maxItems !== undefined) && items.length < maxItems))
+				items.push({quantity: quantity, name: name})
+			else 
+				console.log('max items reached')
 		}
 
 		service.getItems = () => {
@@ -40,6 +39,12 @@
 
 		service.removeItem = (index) => {
 			items.splice(index,1)
+		}
+	}
+
+	function shoppingCartFactory(){
+		return	(maxItems) => {
+			return new shoppingCartItems(maxItems)
 		}
 	}
 
