@@ -1,27 +1,21 @@
 (function(){
 	'use strict'
-	angular.module('ngrepeatApp', [])
+	angular.module('controllerAsApp', [])
 
-	.controller('ngrepeatController', ngrepeatController)
-	
-	ngrepeatController.$inject = ['$scope']
-	function ngrepeatController($scope){
-		$scope.shoppingCart = [
-			{name: 'milk',
-			quantity: 2},
-			{name: 'chocolate',
-			quantity: 10},
-			{name: 'condom',
-			quantity: 20},
-			{name: 'guitar',
-			quantity: 1},
-			{name: 'camera',
-			quantity: 10},
+	.controller('controllerAsController', controllerAsController)
+	.controller('childController', childController)
+	function controllerAsController(){
+		var parent = this
+		parent.value = 2
+		parent.obj = {objValue: 're'}
+	}
 
-		]
-		$scope.addItem = ()=> {
-			$scope.shoppingCart.push({name: $scope.newItemName, quantity: $scope.newItemQuantity})
-		}
+	childController.$inject = ['$scope']
+	function childController($scope){
+		var child = this
+		child.value = 3
+		// child.obj = {objValue:'re3'}
+		console.log($scope)
 	}
 	
 })()
