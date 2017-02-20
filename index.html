@@ -4,7 +4,7 @@
 	<title>Angular starts...</title>
 	<script type="text/javascript" src="angular.min.js"></script>
 	<script type="text/javascript" src="app.js"></script>
-	<style type="text/css">div{font-size: 1.8em}</style>
+	<style type="text/css">div{font-size: 1.8em} .red{color:red}</style>
 </head>
 <body>
 <div ng-controller = "customServiceController as addItems">
@@ -20,6 +20,9 @@
 				<button ng-click="addItems.removeItem($index)">X</button>
 		</li>
 	</ul>
+	<!-- <div ng-if="addItems.errorMessage" class="red">Error: {{addItems.errorMessage}}</div> -->
+	<!-- <div ng-show="addItems.errorMessage" class="red">Error: {{addItems.errorMessage}}</div> -->
+	<div ng-hide="!addItems.errorMessage" class="red">Error: {{addItems.errorMessage}}</div>
 </div>
 
 
