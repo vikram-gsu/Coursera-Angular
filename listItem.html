@@ -4,5 +4,5 @@
 				<button ng-click="list.removeItem($index)">X</button>
 		</li>
 </ul>
-<div ng-hide="!list.errorMessage" class="red">Error: {{list.errorMessage}}</div>
+<div ng-if="list.cookiesInList()" class="red">Warning: Chips in list</div>
 </div>

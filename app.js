@@ -7,28 +7,36 @@
 	.config(Config)
 	.service('weightLossFilterService', weightLossFilterService)
 	.directive('listItem', ListItem)
-	// .controller('shoppingListDirectiveController', ShoppingListDirectiveController)
+	.controller('shoppingListDirectiveController', ShoppingListDirectiveController)
 	
 	function ListItem(){
 		var ddo = {
-			restrict: 'E',
+			// restrict: 'E',
 			templateUrl: 'listItem.html',
 			scope: {
-				list: '=myList',
+				items: '<',
 				title: '@title'
 			},
-			// controller: ShoppingListDirectiveController,
-			// controllerAs: 'list',
-			// bindToController: true
+			controller: 'shoppingListDirectiveController',
+			controllerAs: 'list',
+			bindToController: true
 		}
 		return ddo
 	}
 
-	// function ShoppingListDirectiveController(){
-	// 	var list = this
+	function ShoppingListDirectiveController(){
+		var list = this
 
-		
-	// }
+		list.cookiesInList = function(){
+			for (var i = list.items.length - 1; i >= 0; i--) {
+				if(list.items[i].toLowerCase.indexOf('chips') !== -1){
+					return true
+				}
+			}
+			return false
+		}
+
+	}
 	Config.$inject = ['shoppingCartItemsServiceProvider']
 	function Config(shoppingCartItemsServiceProvider){
 		shoppingCartItemsServiceProvider.defaults.maxItems = 2
