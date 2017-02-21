@@ -15,15 +15,12 @@
 	
 
 
-	<ul ng-repeat="item in addItems.items">
-		<li>{{item.quantity}} of {{item.name}}
-				<button ng-click="addItems.removeItem($index)">X</button>
-		</li>
-	</ul>
+	<list-item title={{addItems.title}} my-list="addItems">
+	</list-item>
 	<!-- <div ng-if="addItems.errorMessage" class="red">Error: {{addItems.errorMessage}}</div> -->
 	<!-- <div ng-show="addItems.errorMessage" class="red">Error: {{addItems.errorMessage}}</div> -->
-	<div ng-hide="!addItems.errorMessage" class="red">Error: {{addItems.errorMessage}}</div>
-</div>
+	<!-- <div ng-hide="!addItems.errorMessage" class="red">Error: {{addItems.errorMessage}}</div>
+</div> -->
 
 
 </body>

@@ -6,7 +6,29 @@
 	.provider('shoppingCartItemsService', shoppingCartProvider)
 	.config(Config)
 	.service('weightLossFilterService', weightLossFilterService)
+	.directive('listItem', ListItem)
+	// .controller('shoppingListDirectiveController', ShoppingListDirectiveController)
+	
+	function ListItem(){
+		var ddo = {
+			restrict: 'E',
+			templateUrl: 'listItem.html',
+			scope: {
+				list: '=myList',
+				title: '@title'
+			},
+			// controller: ShoppingListDirectiveController,
+			// controllerAs: 'list',
+			// bindToController: true
+		}
+		return ddo
+	}
 
+	// function ShoppingListDirectiveController(){
+	// 	var list = this
+
+		
+	// }
 	Config.$inject = ['shoppingCartItemsServiceProvider']
 	function Config(shoppingCartItemsServiceProvider){
 		shoppingCartItemsServiceProvider.defaults.maxItems = 2
@@ -15,9 +37,12 @@
 	function customServiceController(shoppingCartItemsService){
 		var addItems = this
 		// var shoppingList = shoppingCartItemsService()
+		addItems.title = "Shopping list(" + "0"+ " items)"
 		addItems.addItem = () => {
 			try{
 				shoppingCartItemsService.addItems(addItems.itemQuantity, addItems.itemName)
+				.then(response => addItems.title = "Shopping list(" + addItems.items.length+ " items)"
+)
 				.catch(e=> addItems.errorMessage = e.message)
 			}catch(e){
 				addItems.errorMessage = e.message
@@ -27,7 +52,10 @@
 	
 		addItems.items = shoppingCartItemsService.getItems()
 		addItems.removeItem = (index) => {
+
 			shoppingCartItemsService.removeItem(index)
+			addItems.title = "Shopping list(" + addItems.items.length+ " items)"
+
 		}
 	}
 
@@ -42,7 +70,7 @@
 			var checkNamePromise = weightLossFilterService.checkName(name)
 			var checkQuantityPromise = weightLossFilterService.checkQuantity(quantity)
 			console.log('past the decl')
-			return $q.all([checkNamePromise, checkQuantityPromise])
+			return $q.all([checkQuantityPromise])
 				.then((response) => {
 					if((maxItems === undefined) || ((maxItems !== undefined) && items.length < maxItems))
 						items.push({quantity: quantity, name: name})
