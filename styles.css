@@ -1,0 +1,8 @@
+div{
+	font-size: 1.8em
+}
+
+.error{
+	color:red;
+	display:none;
+}

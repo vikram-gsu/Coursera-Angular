@@ -11,17 +11,39 @@
 	
 	function ListItem(){
 		var ddo = {
-			// restrict: 'E',
+			restrict: 'E',
 			templateUrl: 'listItem.html',
 			scope: {
 				items: '<',
+				dirRemoveItem: '&removeItem',
 				title: '@title'
 			},
 			controller: 'shoppingListDirectiveController',
+			link: ShoppingListDirectiveLink,
 			controllerAs: 'list',
 			bindToController: true
 		}
 		return ddo
+	}
+
+	function ShoppingListDirectiveLink(scope, element, attrs, controller){
+		
+		scope.$watch('list.cookiesInList()', function(newValue, oldValue){
+			if(newValue){
+				showWarning()
+			}else{
+				hideWarning()
+			}
+		})
+		var warningElem = element.find('div')
+		function showWarning(){
+			// warningElem.css('display', 'block')
+			warningElem.fadeIn(1000)
+		}
+		function hideWarning(){
+			// warningElem.css('display', 'none')
+			warningElem.fadeOut(1000)
+		}
 	}
 
 	function ShoppingListDirectiveController(){
@@ -29,7 +51,7 @@
 
 		list.cookiesInList = function(){
 			for (var i = list.items.length - 1; i >= 0; i--) {
-				if(list.items[i].toLowerCase.indexOf('chips') !== -1){
+				if(list.items[i].name.toLowerCase().indexOf('chips') !== -1){
 					return true
 				}
 			}
@@ -49,8 +71,7 @@
 		addItems.addItem = () => {
 			try{
 				shoppingCartItemsService.addItems(addItems.itemQuantity, addItems.itemName)
-				.then(response => addItems.title = "Shopping list(" + addItems.items.length+ " items)"
-)
+				.then(response => addItems.title = "Shopping list(" + addItems.items.length+ " items)")
 				.catch(e=> addItems.errorMessage = e.message)
 			}catch(e){
 				addItems.errorMessage = e.message
