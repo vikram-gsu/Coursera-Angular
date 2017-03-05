@@ -3,7 +3,8 @@
 	angular.module('customServiceApp', [])
 
 	.controller('customServiceController', customServiceController)
-	.provider('shoppingCartItemsService', shoppingCartProvider)
+	.service('shoppingCartItemsService', shoppingCartItemsService)
+	.provider('shoppingCartItemsServiceProvider', shoppingCartProvider)
 	.config(Config)
 	.service('weightLossFilterService', weightLossFilterService)
 	.directive('listItem', ListItem)
@@ -11,7 +12,7 @@
 	
 	function ListItem(){
 		var ddo = {
-			restrict: 'E',
+			restrict: 'AE',
 			templateUrl: 'listItem.html',
 			scope: {
 				items: '<',
@@ -21,7 +22,8 @@
 			controller: 'shoppingListDirectiveController',
 			link: ShoppingListDirectiveLink,
 			controllerAs: 'list',
-			bindToController: true
+			bindToController: true,
+			transclude: true
 		}
 		return ddo
 	}
@@ -63,15 +65,25 @@
 	function Config(shoppingCartItemsServiceProvider){
 		shoppingCartItemsServiceProvider.defaults.maxItems = 2
 	}
-	customServiceController.$inject = ['shoppingCartItemsService']
-	function customServiceController(shoppingCartItemsService){
+	customServiceController.$inject = ['shoppingCartItemsServiceProvider']
+	function customServiceController(shoppingCartItemsServiceProvider){
 		var addItems = this
-		// var shoppingList = shoppingCartItemsService()
+		// var shoppingList = shoppingCartItemsServiceProvider()
 		addItems.title = "Shopping list(" + "0"+ " items)"
+		addItems.warning = "Cookies in list"
+
 		addItems.addItem = () => {
 			try{
-				shoppingCartItemsService.addItems(addItems.itemQuantity, addItems.itemName)
-				.then(response => addItems.title = "Shopping list(" + addItems.items.length+ " items)")
+
+				shoppingCartItemsServiceProvider.addItems(addItems.itemQuantity, addItems.itemName)
+				.then(response => {
+					addItems.title = "Shopping list(" + addItems.items.length+ " items)"
+					
+					// if(addItems.itemName.toLowerCase().indexOf('cookie') != -1){
+					// 	addItems.warning = "Cookies in list"
+					// 	console.log(addItems)
+					// }
+				})
 				.catch(e=> addItems.errorMessage = e.message)
 			}catch(e){
 				addItems.errorMessage = e.message
@@ -79,10 +91,10 @@
 		}
 
 	
-		addItems.items = shoppingCartItemsService.getItems()
+		addItems.items = shoppingCartItemsServiceProvider.getItems()
 		addItems.removeItem = (index) => {
 
-			shoppingCartItemsService.removeItem(index)
+			shoppingCartItemsServiceProvider.removeItem(index)
 			addItems.title = "Shopping list(" + addItems.items.length+ " items)"
 
 		}
@@ -96,7 +108,7 @@
 
 		service.addItems = (quantity, name) => {
 			
-			var checkNamePromise = weightLossFilterService.checkName(name)
+			// var checkNamePromise = weightLossFilterService.checkName(name)
 			var checkQuantityPromise = weightLossFilterService.checkQuantity(quantity)
 			console.log('past the decl')
 			return $q.all([checkQuantityPromise])
