@@ -63,7 +63,8 @@
 	}
 	Config.$inject = ['shoppingCartItemsServiceProvider']
 	function Config(shoppingCartItemsServiceProvider){
-		shoppingCartItemsServiceProvider.defaults.maxItems = 2
+		shoppingCartItemsServiceProvider.defaults = {maxItems: 2}
+		
 	}
 	customServiceController.$inject = ['shoppingCartItemsServiceProvider']
 	function customServiceController(shoppingCartItemsServiceProvider){
